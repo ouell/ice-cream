@@ -1,6 +1,18 @@
-const mongoose = require('mongoose')
+import { Schema, model } from 'mongoose';
 
-const ClientSchema = new mongoose.Schema({
+export interface IClient {
+    name: string,
+    email: string,
+    phone: number,
+    address: string,
+    addressNumber: string,
+    addressCity: string,
+    addressPostalCode: number,
+    birthDate: Date,
+    isActive: boolean
+}
+
+const ClientSchema = new Schema<IClient>({
     name: {
         type: String,
         required: true
@@ -36,4 +48,4 @@ const ClientSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Client', ClientSchema)
+export const ClientModel = model<IClient>('Client', ClientSchema)

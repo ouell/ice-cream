@@ -1,7 +1,6 @@
-const { applySpec, always, prop } = require("ramda");
-
-const ClientRepository = require("../repositories/client");
-const ClientService = require("../services/client");
+import { applySpec, always, prop } from "ramda";
+import * as ClientService from "../services/clientService";
+import {RequestHandler} from "express";
 
 const responseFormat = applySpec({
   data: {
@@ -18,14 +17,11 @@ const responseFormat = applySpec({
   },
 });
 
-exports.create = async (req, res, next) => {
+export const create: RequestHandler = async (req, res, next) => {
   try {
     const { body: clientReq } = req;
 
-    const createdClient = await ClientService.create(
-      ClientRepository,
-      clientReq
-    );
+    const createdClient = await ClientService.createService(clientReq);
 
     return res.status(201).json(responseFormat(createdClient));
   } catch (error) {
